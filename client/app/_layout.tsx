@@ -52,7 +52,7 @@ export default function RootLayout() {
         return null;
     }
 
-    setColorScheme("dark")
+    setColorScheme("light")
 
   return (
       <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
