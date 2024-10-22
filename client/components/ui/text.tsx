@@ -10,15 +10,15 @@ const textStyles = cva(
     {
         variants: {
             variant: {
-                h1: "text-5xl font-extrabold leading-[48px]",
-                h2: "text-[32px] font-bold leading-9",
-                h3: "text-2xl font-semibold leading-loose",
-                h4: "text-xl font-semibold leading-7",
-                p: "text-base font-normal",
-                lead: "text-xl font-normal leading-7",
-                large: "text-lg font-semibold leading-7",
-                small: "text-sm font-medium leading-[14px]",
-                subtle: "text-sm font-normal leading-tight text-muted-foreground",
+                h1: "text-5xl font-extrabold leading-[48px] font-plusjakarta-extrabold",
+                h2: "text-[32px] font-plusjakarta-bold leading-9",
+                h3: "text-2xl font-plusjakarta-semibold leading-loose",
+                h4: "text-xl font-plusjakarta-semibold leading-7",
+                p: "text-base font-plusjakarta-regular",
+                lead: "text-xl font-plusjakarta-regular leading-7",
+                large: "text-lg font-plusjakarta-semibold leading-7",
+                small: "text-sm font-plusjakarta-medium leading-[14px]",
+                subtle: "text-sm font-plusjakarta-regular leading-tight text-muted-foreground",
             }
         },
         defaultVariants: {
