@@ -7,6 +7,22 @@ module.exports = {
   presets: [require('nativewind/preset')],
   theme: {
     extend: {
+      fontFamily: {
+        "plusjakarta-bold": ["PlusJakartaSans-Bold", "sans-serif"],
+        "plusjakarta-bolditalic": ["PlusJakartaSans-BoldItalic", "sans-serif"],
+        "plusjakarta-extrabold": ["PlusJakartaSans-ExtraBold", "sans-serif"],
+        "plusjakarta-extrabolditalic": ["PlusJakartaSans-ExtraBoldItalic", "sans-serif"],
+        "plusjakarta-extralight": ["PlusJakartaSans-ExtraLight", "sans-serif"],
+        "plusjakarta-extralightitalic": ["PlusJakartaSans-ExtraLightItalic", "sans-serif"],
+        "plusjakarta-italic": ["PlusJakartaSans-Italic", "sans-serif"],
+        "plusjakarta-light": ["PlusJakartaSans-Light", "sans-serif"],
+        "plusjakarta-lightitalic": ["PlusJakartaSans-LightItalic", "sans-serif"],
+        "plusjakarta-medium": ["PlusJakartaSans-Medium", "sans-serif"],
+        "plusjakarta-mediumitalic": ["PlusJakartaSans-MediumItalic", "sans-serif"],
+        "plusjakarta-regular": ["PlusJakartaSans-Regular", "sans-serif"],
+        "plusjakarta-semibold": ["PlusJakartaSans-SemiBold", "sans-serif"],
+        "plusjakarta-semibolditalic": ["PlusJakartaSans-SemiBoldItalic", "sans-serif"],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

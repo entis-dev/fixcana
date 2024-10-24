@@ -3,10 +3,10 @@ import "../styles/global.css"
 import {NAV_THEME} from "@/lib/constants";
 import {Theme, ThemeProvider} from "@react-navigation/native";
 import {useColorScheme} from "@/lib/useColorScheme";
-import React from "react";
+import React, {useEffect} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {Platform} from "react-native";
 import { StatusBar } from 'expo-status-bar';
+import {useFonts} from "expo-font";
 
 const LIGHT_THEME: Theme = {
     dark: false,
@@ -23,22 +23,55 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
     const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme();
     const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
+    const [loaded] = useFonts({
+        "PlusJakartaSans-Bold": require('../assets/fonts/PlusJakartaSans-Bold.ttf'),
+        "PlusJakartaSans-BoldItalic": require('../assets/fonts/PlusJakartaSans-BoldItalic.ttf'),
+        "PlusJakartaSans-ExtraBold": require('../assets/fonts/PlusJakartaSans-ExtraBold.ttf'),
+        "PlusJakartaSans-ExtraBoldItalic": require('../assets/fonts/PlusJakartaSans-ExtraBoldItalic.ttf'),
+        "PlusJakartaSans-ExtraLight": require('../assets/fonts/PlusJakartaSans-ExtraLight.ttf'),
+        "PlusJakartaSans-ExtraLightItalic": require('../assets/fonts/PlusJakartaSans-ExtraLightItalic.ttf'),
+        "PlusJakartaSans-Italic": require('../assets/fonts/PlusJakartaSans-Italic.ttf'),
+        "PlusJakartaSans-Light": require('../assets/fonts/PlusJakartaSans-Light.ttf'),
+        "PlusJakartaSans-LightItalic": require('../assets/fonts/PlusJakartaSans-LightItalic.ttf'),
+        "PlusJakartaSans-Medium": require('../assets/fonts/PlusJakartaSans-Medium.ttf'),
+        "PlusJakartaSans-MediumItalic": require('../assets/fonts/PlusJakartaSans-MediumItalic.ttf'),
+        "PlusJakartaSans-Regular": require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
+        "PlusJakartaSans-SemiBold": require('../assets/fonts/PlusJakartaSans-SemiBold.ttf'),
+        "PlusJakartaSans-SemiBoldItalic": require('../assets/fonts/PlusJakartaSans-SemiBoldItalic.ttf'),
+    })
 
-    React.useEffect(() => {
+    useEffect(() => {
+        if (loaded) {
+            SplashScreen.hideAsync();
+        }
+    }, [loaded]);
+
+    useEffect(() => {
         (async () => {
             const theme = await AsyncStorage.getItem('theme');
-            if (Platform.OS === 'web') {
-                // Adds the background color to the html element to prevent white background on overscroll.
-                document.documentElement.classList.add('bg-background');
-            }
+
+            // If there is no theme stored in preferences, apply the default (system).
             if (!theme) {
-                await AsyncStorage.setItem('theme', colorScheme);
+                await AsyncStorage.setItem('theme', 'system');
                 setIsColorSchemeLoaded(true);
                 return;
             }
-            const colorTheme = theme === 'dark' ? 'dark' : 'light';
-            if (colorTheme !== colorScheme) {
-                setColorScheme(colorTheme);
+
+            // Validate the theme setting value coming from user storage.
+            let validatedTheme: "light" | "dark" | "system" = "system";
+            switch (theme) {
+                case "light":
+                case "dark":
+                case "system":
+                    validatedTheme = theme;
+                    break
+                default:
+                    console.warn(`Resetting theme value as it's invalid ${theme}`);
+                    break
+            }
+
+            if (validatedTheme !== colorScheme) {
+                setColorScheme(validatedTheme);
                 setIsColorSchemeLoaded(true);
                 return;
             }
@@ -52,15 +85,19 @@ export default function RootLayout() {
         return null;
     }
 
-    setColorScheme("dark")
+    if (!loaded) {
+        return null;
+    }
+
 
   return (
       <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
           <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
           <Stack>
-              <Stack.Screen name="index" options={{
-                  title: 'Starter Base',
-              }} />
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              {/*<Stack.Screen name="(root)" options={{ headerShown: false }} />*/}
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              {/*<Stack.Screen name="+not-found" />*/}
           </Stack>
       </ThemeProvider>
   );
